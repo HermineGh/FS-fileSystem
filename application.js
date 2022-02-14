@@ -2,13 +2,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const sizeFormate = require('./src/components/modules/modules');
+const sizeFormate = require('./src/modules/modules');
 
 // path from command line arguments
 let pathName = process.argv[2];
 
 if (path.dirname(pathName) === '../..') {
-  //go up
+  // go up
   pathName = path.dirname(pathName).split(path.sep).pop();
 }
 const filesArr = (comLineArg, data) => {
