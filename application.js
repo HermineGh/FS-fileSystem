@@ -38,11 +38,15 @@ const filesArr = async (argvData, data) => {
 
 const writeTo = (f) =>
   new Promise((resolve, reject) => {
-    fs.writeFileSync('./sorted_files.txt', 'sorted_files.txt\n\n\n', (err) => {
+    try {
+      fs.writeFileSync('./sorted_files.txt', 'sorted_files.txt\n\n\n');
+      f.forEach((el) =>
+        fs.appendFileSync('sorted_files.txt', el[1].toString())
+      );
+      resolve('Done');
+    } catch (err) {
       reject(err);
-    });
-    f.forEach((el) => fs.appendFileSync('sorted_files.txt', el[1].toString()));
-    resolve('Done');
+    }
   });
 
 const writeToFile = async () => {
