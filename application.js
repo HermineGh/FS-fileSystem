@@ -4,14 +4,6 @@ const path = require('path');
 const fsPromises = require('fs/promises');
 const sizeFormate = require('./src/modules/modules');
 
-// path from command line arguments
-let pathName = process.argv[2];
-
-// go up
-if (path.dirname(pathName) === '../..') {
-  pathName = path.dirname(pathName).split(path.sep).pop();
-}
-
 const filesArr = async (argvData, data) => {
   const allFiles = data || [];
   try {
@@ -51,6 +43,14 @@ const writeTo = (f) =>
 
 const writeToFile = async () => {
   try {
+    // path from command line arguments
+    let pathName = process.argv[2];
+
+    // go up
+    if (path.dirname(pathName) === '../..') {
+      pathName = path.dirname(pathName).split(path.sep).pop();
+    }
+
     const files = await filesArr(pathName);
     await writeTo(files);
   } catch (err) {
