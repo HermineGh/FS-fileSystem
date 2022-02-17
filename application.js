@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const fsPromises = require('fs/promises');
-const sizeFormate = require('./src/components/modules/modules');
+const sizeFormate = require('./src/modules/modules');
 
 // path from command line arguments
 let pathName = process.argv[2];
