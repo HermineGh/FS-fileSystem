@@ -36,13 +36,19 @@ const filesArr = async (argvData, data) => {
   return allFiles.sort((a, b) => b[0] - a[0]);
 };
 
+const writeTo = (f) =>
+  new Promise((resolve, reject) => {
+    fs.writeFileSync('./sorted_files.txt', 'sorted_files.txt\n\n\n', (err) => {
+      reject(err);
+    });
+    f.forEach((el) => fs.appendFileSync('sorted_files.txt', el[1].toString()));
+    resolve('Done');
+  });
+
 const writeToFile = async () => {
   try {
     const files = await filesArr(pathName);
-    await fsPromises.writeFile('./sorted_files.txt', 'sorted_files.txt\n\n\n');
-    files.forEach((el) =>
-      fs.appendFileSync('sorted_files.txt', el[1].toString())
-    );
+    await writeTo(files);
   } catch (err) {
     console.log(err.message);
   }
