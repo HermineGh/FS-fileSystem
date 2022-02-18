@@ -1,9 +1,10 @@
 //  modules
-const fs = require('fs');
+
 const path = require('path');
 const fsPromises = require('fs/promises');
 const sizeFormate = require('./src/modules/modules');
 
+// creating files paths' sorted array
 const filesArr = async (argvData, data) => {
   const allFiles = data || [];
   try {
@@ -25,22 +26,10 @@ const filesArr = async (argvData, data) => {
   } catch (err) {
     console.log(err.message);
   }
-  return allFiles.sort((a, b) => b[0] - a[0]);
+  return allFiles.sort((a, b) => b[0] - a[0]).map((cur) => cur[1]);
 };
 
-const writeTo = (f) =>
-  new Promise((resolve, reject) => {
-    try {
-      fs.writeFileSync('./sorted_files.txt', 'sorted_files.txt\n\n\n');
-      f.forEach((el) =>
-        fs.appendFileSync('sorted_files.txt', el[1].toString())
-      );
-      resolve('Done');
-    } catch (err) {
-      reject(err);
-    }
-  });
-
+// writing paths to a file
 const writeToFile = async () => {
   try {
     // path from command line arguments
@@ -52,7 +41,10 @@ const writeToFile = async () => {
     }
 
     const files = await filesArr(pathName);
-    await writeTo(files);
+    const filesStr = files.join('');
+    await fsPromises.writeFile('./sorted_files.txt', 'sorted_files.txt\n\n\n');
+
+    fsPromises.appendFile('sorted_files.txt', filesStr);
   } catch (err) {
     console.log(err.message);
   }
